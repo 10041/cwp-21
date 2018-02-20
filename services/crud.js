@@ -1,6 +1,5 @@
 class CrudService {
     constructor(repository, errors){
-        
         this.repository = repository;
 		this.errors = errors;
 
@@ -19,10 +18,8 @@ class CrudService {
 		filter = null
 	) {
 		options = { ...this.defaults.readChunk, ...options };
-
 		let limit = options.limit;
 		let offset = (options.page - 1) * options.limit;
-
 		return await repository.findAll({
 			where: { ...filter },
 			raw: true,
@@ -34,29 +31,23 @@ class CrudService {
 
     async read(id) {
         id = parseInt(id);
-
         if (isNaN(id)) {
             throw this.errors.invalidId;
         }
-
         const item = await this.repository.findById(id, { raw: true });
-
         if (!item) {
             throw this.errors.notFound;
         }
-
         return item;
     }
     
     async create(data) {
         const item = await this.repository.create(data);
-
         return item.get({ plain: true });
     }
 
     async update(id, data) {
         await this.repository.update(data, { where: { id: id }, limit: 1 });
-
         return this.read(id);
     }
 
