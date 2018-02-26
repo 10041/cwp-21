@@ -18,7 +18,7 @@ class AgentServices extends CrudService{
         this.shema = shema;
         this.officeRepos = officeRepos;
     }
-    create(data){
+    async create(data){
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
@@ -29,6 +29,10 @@ class AgentServices extends CrudService{
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
         super.update(id, data);
+    }
+    async delete(id){
+        await removeOffice(id);
+        return await super.delete(id);
     }
     async addOffice(id, officeId){
         let office = this.officeRepos.findById(officeId, {raw:true});
@@ -42,12 +46,13 @@ class AgentServices extends CrudService{
         let beforeProp = super.read(id);
         return await super.update(id, {...beforeProp, officeId: null});
     }
-    async readOffice(id, option){
-        let office = this.officeRepos.findById(officeId, {raw:true}); 
+    async readOffice(id, options){
+        const agent = await this.read(id);
         return await super.readChunk({
             limit: Number(options.limit) || this.defaults.readChunk.limit,
             page: Number(options.page) || this.defaults.readChunk.page
         },
-        this.officeRepos)
+        this.officeRepos, 
+        {id: agent.officeId});
     }
 }
