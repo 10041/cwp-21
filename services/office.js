@@ -31,7 +31,7 @@ class OfficeService extends CrudService {
     }
     async delete(id) {
 		await super.read(id);
-		await this.agentsRepository.update(
+		await this.agentRepository.update(
 			{officeId: null},
 			{where: {officeId: id}}
 		);

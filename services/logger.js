@@ -4,19 +4,20 @@ const winston = require("winston");
 const defaultOptions = {
 	transports: [
 		new winston.transports.File({
-			level: "info",
 			filename: "./logs/logs.log",
-			handleExceptions: true,
-			json: true,
-			maxsize: 500, // 0.5 Kb
-			colorize: false
+			maxsize: 512
+		}),
+		new winston.transports.Console({
+			timestamp: true,
+			level: 'info',
+			colorize: true
 		})
 	],
 	exitOnError: false
 };
 
 class LoggerService {
-	constructor(data) {
+	constructor() {
 		this.logger = new winston.Logger(defaultOptions);
 	}
 

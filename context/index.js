@@ -5,10 +5,7 @@ module.exports = (Sequelize, config) => {
         host: config.db.host,
         dialect: 'mysql',
         logging: false,
-        define: {
-            timestamps: true,
-            paranoid: true,
-        }
+
     });
 
     const Agent = require("../models/agent")(Sequelize, sequelize);

@@ -1,5 +1,6 @@
 const express = require("express");
 const asyncErrorHandler = require("../helpers/asyncErrorHandler");
+const cache = require("../services/cache")();
 
 class CrudController {
 	constructor(service) {
@@ -22,12 +23,14 @@ class CrudController {
 	}
 
 	async readAll(req, resp) {
+		console.log("readAll");
 		const result = await this.service.readChunk(req.params);
 
 		resp.json(result);
 	}
 
 	async read(req, resp) {
+		console.log("read");
 		const result = await this.service.read(req.params.id);
 
 		resp.json(result);

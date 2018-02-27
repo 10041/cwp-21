@@ -1,4 +1,5 @@
 const CrudController = require("./crud");
+const cache = require("../services/cache")();
 
 class AgentsController extends CrudController {
 	constructor(agentsService) {

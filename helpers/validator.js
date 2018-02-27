@@ -1,7 +1,6 @@
 const joi = require('joi');
 
 module.exports = (shemaObj, data) => {
-    console.log("validator");
     if(!shemaObj) return false;
 
     let errors = '';

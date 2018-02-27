@@ -19,7 +19,7 @@ class CrudService {
 	) {
 		options = { ...this.defaults.readChunk, ...options };
 		let limit = options.limit;
-		let offset = (options.page - 1) * options.limit;
+        let offset = (options.page - 1) * options.limit;
 		return await repository.findAll({
 			where: { ...filter },
 			raw: true,
@@ -35,6 +35,7 @@ class CrudService {
             throw this.errors.invalidId;
         }
         const item = await this.repository.findById(id, { raw: true });
+        console.log(item);
         if (!item) {
             throw this.errors.notFound;
         }

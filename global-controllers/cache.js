@@ -2,6 +2,7 @@ const cacheService = require("../services/cache")();
 const loggerService = require("../services/logger")();
 
 module.exports = async (req, resp, next) => {
+
 	const data = await cacheService.load(req);
 
 	let oldJson = resp.json;
