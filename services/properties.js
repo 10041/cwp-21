@@ -1,6 +1,6 @@
 
 const CrudService = require('./crud');
-const validator = requre('../helpers/validator.js');
+const validator = require('../helpers/validator');
 
 /*
 a) чтения порции данных с возможностью задания limit (от 5 до 25 с шагом 5), offset, sortOrder, sortField
@@ -23,13 +23,13 @@ class PropertiesService extends CrudService {
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.create(data);
+        return await super.create(data);
     }
     async update(id, data){
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.update(id, data);
+        return await super.update(id, data);
     }
     async bindAgent(id, agentId){
         const agent = this.agentRepository.findById(agentId, {raw:true});
@@ -45,3 +45,5 @@ class PropertiesService extends CrudService {
         return await super.update(id, {...beforeProp, agentId: null});
     }
 }
+
+module.exports = PropertiesService;

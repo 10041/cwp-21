@@ -9,7 +9,7 @@ f) чтение привязанных агентов по id офиса с во
 */
 
 const CrudService = require('./crud');
-const validator = requre('../helpers/validator.js');
+const validator = require('../helpers/validator');
 
 class OfficeService extends CrudService {
     constructor(officeRepository, agentRepository, shema, errors){
@@ -21,13 +21,13 @@ class OfficeService extends CrudService {
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.create(data);
+        return await super.create(data);
     }
     async update(id, data){
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.update(id, data);
+        return await super.update(id, data);
     }
     async delete(id) {
 		await super.read(id);
@@ -47,3 +47,5 @@ class OfficeService extends CrudService {
         {id: office.officeId});
     }
 }
+
+module.exports = OfficeService;

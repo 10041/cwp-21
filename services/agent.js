@@ -10,7 +10,7 @@ h) чтение привязанной недвижемости по id аген
 */
 
 const CrudService = require('./crud');
-const validator = requre('../helpers/validator.js');
+const validator = require('../helpers/validator');
 
 class AgentServices extends CrudService{
     constructor(agentRepos, officeRepos, shema, errors) {
@@ -22,13 +22,13 @@ class AgentServices extends CrudService{
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.create(data);
+        return await super.create(data);
     }
     async update(id, data){
         let valid = validator(this.shema, data);
         if(!valid.isValid)
             throw this.errors.validError(valid.errors);
-        super.update(id, data);
+        return await super.update(id, data);
     }
     async delete(id){
         await removeOffice(id);
@@ -56,3 +56,5 @@ class AgentServices extends CrudService{
         {id: agent.officeId});
     }
 }
+
+module.exports = AgentServices;

@@ -11,17 +11,18 @@ module.exports = (Sequelize, config) => {
         }
     });
 
-    const agent = require('../models/agent');
-    const office = require('../models/office');
-    const propertie = require('../models/propertie');
+    const Agent = require("../models/agent")(Sequelize, sequelize);
+    const Office = require("../models/office")(Sequelize, sequelize);
+    const Propertie = require("../models/propertie")(Sequelize, sequelize);
 
-    propertie.belongTo(agent);
-    agent.belongTo(office);
+    Propertie.belongsTo(Agent);
+    Agent.belongsTo(Office);
 
     return {
-        agents: agent,
-        offices: office,
-        properties: propertie,
+        agents: Agent,
+        offices: Office,
+        properties: Propertie,
+
         sequelize,
         Sequelize,
     };
